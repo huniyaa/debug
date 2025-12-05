@@ -65,7 +65,7 @@ router.post('/trips', async (req, res) => {
         res.status(500).send({ error: 'Failed to create trip', details: err.message })
     }
 })
-{console.log("before delete")}
+console.log("before delete")
 // Delete a trip
 router.delete('/trips/:id', async (req, res) => {
     console.log("inside delete")
@@ -127,7 +127,7 @@ router.patch('/cities/:id', async (req, res) => {
         res.status(500).send({ error: 'Failed to update city', details: err.message })
     }
 })
-{console.log("before delete city")}
+console.log("before delete city")
 // Delete a city
 router.delete('/cities/:id', async (req, res) => {
     try {
