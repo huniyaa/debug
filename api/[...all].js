@@ -27,6 +27,7 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log("PATHNAME IS", pathname);
     // ----- TEST ENDPOINT -----
     if (pathname === "/api/test") {
       return res
@@ -42,6 +43,26 @@ export default async function handler(req, res) {
         });
         return res.status(200).json(trips);
       }
+
+      //check
+      // DELETE trip by ID
+if (req.method === "DELETE" && pathname.startsWith("/api/trips/")) {
+  // remove any trailing slash
+  (console.log("INNER"));
+  const tripId = pathname.replace(/^\/api\/trips\/|\/$/g, "");
+  console.log("Deleting trip ID:", tripId);
+
+  if (!tripId) return res.status(400).json({ error: "Trip ID missing" });
+
+  try {
+    await prisma.trip.delete({ where: { id: tripId } });
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("DELETE trip error:", err);
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 
       if (req.method === "POST") {
         const { name, cities } = req.body;
@@ -75,15 +96,24 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true });
     }**/
    
-    console.log("REQ METHOD:", req.method, "PATH:", pathname);
+    // DELETE trip by ID
+if (req.method === "DELETE" && pathname.startsWith("/api/trips/")) {
+  // remove any trailing slash
+  (console.log("OUTER"));
+  const tripId = pathname.replace(/^\/api\/trips\/|\/$/g, "");
+  console.log("Deleting trip ID:", tripId);
 
-   const pathSegments = pathname.split("/").filter(Boolean);
-   if (req.method === "DELETE" && pathSegments[0] === "api" && pathSegments[1] === "trips") {
-    const tripId = pathSegments[2];
-    if (!tripId) return res.status(400).json({error: "Trip ID missing"});
-    await prisma.trip.delete({where: {id: tripId}});
-    return res.status(200).json({success: true});
-   }
+  if (!tripId) return res.status(400).json({ error: "Trip ID missing" });
+
+  try {
+    await prisma.trip.delete({ where: { id: tripId } });
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("DELETE trip error:", err);
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 
     // ----- CITIES -----
     if (pathname === "/api/cities" && req.method === "POST") {
