@@ -73,6 +73,9 @@ export default async function handler(req, res) {
       await prisma.trip.delete({ where: { id: tripId } });
       return res.status(200).json({ success: true });
     }**/
+   
+    console.log("REQ METHOD:", req.method, "PATH:", pathname);
+
    const pathSegments = pathname.split("/").filter(Boolean);
    if (req.method === "DELETE" && pathSegments[0] === "api" && pathSegments[1] === "trips") {
     const tripId = pathSegments[2];
