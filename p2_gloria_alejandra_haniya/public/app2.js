@@ -164,6 +164,7 @@ async function deleteCity(cityId) {
       renderCities();
     } else {
       console.error('Failed to delete city:', response.status);
+      console.log("response is ", response)
       alert('Failed to delete city');
     }
   } catch (err) {
