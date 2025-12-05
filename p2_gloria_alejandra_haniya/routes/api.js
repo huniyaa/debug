@@ -65,9 +65,9 @@ router.post('/trips', async (req, res) => {
         res.status(500).send({ error: 'Failed to create trip', details: err.message })
     }
 })
-console.log("before delete")
 // Delete a trip
 router.delete('/trips/:id', async (req, res) => {
+    console.log("DELETE TRIP ID RECEIVED:", req.params.id)
     console.log("inside delete")
     try {
         await prisma.trip.delete({
